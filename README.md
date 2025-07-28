@@ -1,6 +1,34 @@
-# Getting Started with Create React App
+# Azure AI Search POC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project demonstrates how to query an Azure AI Search index from a React application. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Configuration
+
+Create a `.env` file based on `.env.sample` and provide your Azure Search details:
+
+```
+REACT_APP_AZURE_SEARCH_API_KEY=your-azure-search-key
+REACT_APP_AZURE_SEARCH_API_URL=https://your-service.search.windows.net
+REACT_APP_AZURE_SEARCH_INDEX=your-index-name
+REACT_APP_AZURE_SEARCH_API_VERSION=2023-07-01-Preview
+```
+
+The `.env` file is gitignored so your credentials won't be committed.
+
+## Running the POC
+
+Install dependencies and start the development server:
+
+```
+npm install
+npm start
+```
+
+Run tests with:
+
+```
+npm test
+```
 
 ## Available Scripts
 
