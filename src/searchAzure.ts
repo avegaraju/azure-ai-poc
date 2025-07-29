@@ -1,13 +1,29 @@
 interface SearchResult {
   "@search.score": number;
-  content?: string;
-  [key: string]: any;
+  "@search.rerankerScore": number;
+  "@search.captions": Array<{
+    text: string;
+    highlights: string;
+  }>;
+  videoId: string;
+  title: string;
+  description: string;
+  transcript: string;
+  people: string[];
+  keywords: string[];
+  topics: string[];
+  labels: string[];
+  language: string;
+  durationInSeconds: number | null;
+  thumbnailUrl: string | null;
+  videoUrl: string | null;
+  url: string | null;
 }
 
 interface SearchResponse {
   "@odata.context": string;
+  "@search.answers": any[];
   value: SearchResult[];
-  [key: string]: any;
 }
 
 export async function searchAzure(query: string): Promise<SearchResponse> {
@@ -18,7 +34,7 @@ export async function searchAzure(query: string): Promise<SearchResponse> {
 
   if (!apiKey || !apiUrl || !index) {
     console.error("Azure Search configuration missing");
-    return { "@odata.context": "", value: [] };
+    return { "@odata.context": "", "@search.answers": [], value: [] };
   }
 
   const url = `${apiUrl}/indexes/${index}/docs?api-version=${apiVersion}&search=${encodeURIComponent(
@@ -34,7 +50,7 @@ export async function searchAzure(query: string): Promise<SearchResponse> {
 
   if (!response.ok) {
     console.error("Search request failed", await response.text());
-    return { "@odata.context": "", value: [] };
+    return { "@odata.context": "", "@search.answers": [], value: [] };
   }
 
   return await response.json();
