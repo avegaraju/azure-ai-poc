@@ -30,6 +30,12 @@ Run tests with:
 npm test
 ```
 
+## Search Index Optimization
+
+After each search, the app analyzes the returned documents and stores the top
+keywords in the browser's local storage. These keywords can be used as a basis
+for refining your Azure Search index or providing suggestions to the user.
+
 ## Available Scripts
 
 In the project directory, you can run:

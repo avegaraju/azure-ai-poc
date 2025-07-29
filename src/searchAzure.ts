@@ -1,14 +1,16 @@
-interface SearchResult {
+export interface SearchResult {
   "@search.score": number;
   content?: string;
   [key: string]: any;
 }
 
-interface SearchResponse {
+export interface SearchResponse {
   "@odata.context": string;
   value: SearchResult[];
   [key: string]: any;
 }
+
+import { optimizeIndexFromResults } from "./optimizeIndex";
 
 export async function searchAzure(query: string): Promise<SearchResponse> {
   const apiKey = process.env.REACT_APP_AZURE_SEARCH_API_KEY;
@@ -37,5 +39,7 @@ export async function searchAzure(query: string): Promise<SearchResponse> {
     return { "@odata.context": "", value: [] };
   }
 
-  return await response.json();
+  const data = (await response.json()) as SearchResponse;
+  optimizeIndexFromResults(data.value);
+  return data;
 }
